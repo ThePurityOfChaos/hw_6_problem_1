@@ -54,24 +54,24 @@ public class MyMiniSearchEngine {
             }
             return result;
         }else{ //had help from Kevin but did work myself :D
-           for(int i=0; i<keyWords.length-1; i++) {
-               if (indexes.containsKey(keyWords[i])) {
-                   if (indexes.containsKey(keyWords[i + 1])) {
-                       for (int j = 0; j < indexes.get(keyWords[i]).size(); j++) {
-                           if (indexes.get(keyWords[i]).get(j).size() > 0 && indexes.get(keyWords[i + 1]).get(j).size() > 0) {
-                               for (int k = 0; k < indexes.get(keyWords[i]).get(j).size(); k++) {
-                                   if (indexes.get(keyWords[i]).get(j).get(k) == indexes.get(keyWords[i + 1]).get(j).get(k) - 1) {
-                                       if (!result.contains(j))
+           for(int i=0; i<keyWords.length-1; i++) { //< the total number of key words
+               if (indexes.containsKey(keyWords[i])) { //if it contains the word at i
+                   if (indexes.containsKey(keyWords[i + 1])) { //if it also contains the word at i+1
+                       for (int j = 0; j < indexes.get(keyWords[i]).size(); j++) { //keyWords[i] is a List<List<Integer>> so its size is the number of documents
+                           if (indexes.get(keyWords[i]).get(j).size() > 0 && indexes.get(keyWords[i + 1]).get(j).size() > 0) { //.get(keyWords[i]).get(j).size() is the size of an individual document
+                               for (int k = 0; k < indexes.get(keyWords[i]).get(j).size(); k++) { //k is the index of each word
+                                   if (indexes.get(keyWords[i]).get(j).get(k) == indexes.get(keyWords[i + 1]).get(j).get(k) - 1) { //.get(keyWords[i]).get(j).get(k) is the index of the word(i) in the document(j).
+                                       if (!result.contains(j)) //if it's not already there
                                            result.add(j);
                                    }
                                }
                            }
                        }
-                   } else {
+                   } else { //necessary null
                        return null;
                    }
                }
-               else {
+               else { //necessary null
                    return null;
                }
            }
