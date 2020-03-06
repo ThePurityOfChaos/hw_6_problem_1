@@ -23,13 +23,17 @@ public class MyMiniSearchEngine {
 
     private void index(List<String> texts) {
         indexes = new HashMap<>();
-        List<Integer> innerList = new ArrayList<>();
-        List<List<Integer>> outerList = new ArrayList<>();
         for (int i=0; i<texts.size(); i++) {
             String[] words = texts.get(i).split(" ");
-
             for(int j=0; j<words.length; j++) {
-                indexes.put(words[j], outerList);
+                if(!indexes.containsKey(words[j])) {
+                    List<List<Integer>> outerList = new ArrayList<>();
+                    for(int k=0; k<texts.size(); k++) {
+                        outerList.add(new ArrayList<>());
+                    }
+                    indexes.put(words[j], outerList);
+                }
+                indexes.get(words[j]).get(i).add(j);
             }
         }
         System.out.println(indexes);
@@ -39,7 +43,12 @@ public class MyMiniSearchEngine {
     // key phrase can have one or two words in English alphabetic characters.
     // return an empty list if search() finds no match in all documents.
     public List<Integer> search(String keyPhrase) {
-        // homework
-        return new ArrayList<>(); // place holder
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i<indexes.get(keyPhrase).size(); i++){
+          if(indexes.get(keyPhrase).get(i).size()>0){
+              result.add(i);
+          }
+        }
+        return result;
     }
 }
