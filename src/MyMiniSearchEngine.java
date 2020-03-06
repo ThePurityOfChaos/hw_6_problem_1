@@ -22,12 +22,17 @@ public class MyMiniSearchEngine {
     // assume documents only contain alphabetical words separated by white spaces.
 
     private void index(List<String> texts) {
-        List<List<Integer>> depth= new ArrayList<>();
-        for (String text : texts) {
-            String[] words = text.split(" ");
-            indexes.put(Arrays.toString(words), depth);
+        indexes = new HashMap<>();
+        List<Integer> innerList = new ArrayList<>();
+        List<List<Integer>> outerList = new ArrayList<>();
+        for (int i=0; i<texts.size(); i++) {
+            String[] words = texts.get(i).split(" ");
+
+            for(int j=0; j<words.length; j++) {
+                indexes.put(words[j], outerList);
+            }
         }
-        //homework
+        System.out.println(indexes);
     }
 
     // search(key) return all the document ids where the given key phrase appears.
